@@ -1,4 +1,4 @@
-module github.com/lxc/incus-demo-server
+module github.com/yrougy/incus-demo
 
 go 1.21
 
