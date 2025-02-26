@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="icon" href="/static/img/favicon.ico"/>
-        <title>Incus demo server</title>
+        <title>OCF Test platform</title>
 
         <!-- Bootstrap core CSS -->
         <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
@@ -18,7 +18,7 @@
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <span class="navbar-brand" id="navbar-title">Incus demo server</span>
+                    <span class="navbar-brand" id="navbar-title">OCF Test Platform</span>
                 </div>
             </div>
         </nav>
@@ -56,7 +56,7 @@
                 <div class="panel-heading">Server status</div>
                 <div class="panel-body" id="tryit_online_message" style="display:none">
                     You are connected over: <span id="tryit_protocol"></span> (<span id="tryit_address"></span>)<br/>
-                    The demo server is currently running <span id="tryit_count"></span> user sessions out of <span id="tryit_max"></span>
+                    The OCF Test Platform server is currently running <span id="tryit_count"></span> user sessions out of <span id="tryit_max"></span>
                 </div>
 
                 <div class="panel-body" id="tryit_maintenance_message" style="display:none">
@@ -82,7 +82,7 @@
                 <div class="panel-body">
                     <button class="btn btn-default btn-lg" id="tryit_accept" type="button">
                         <span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
-                        I have read and accept the terms of service above
+                        I start the test platform
                     </button>
 
                     <div id="tryit_progress" style="display:none;width:100%;text-align:center;">
@@ -117,32 +117,8 @@
             </div>
 
             <div class="panel panel-default" id="tryit_feedback_panel" style="display:none">
-                <div class="panel-heading">Feedback</div>
-                <form class="p-form" id="tryit_feedback_submit" style="padding: 15px">
-                    <div class="p-form__group">
-                        <label for="feedbackRating">Rate your experience</label>
-                        <input type="hidden" class="rating rating-tooltip" id="feedbackRating" />
-                    </div>
-
-                    <div class="p-form__group">
-                        <label for="feedbackEmail">Email address (optional)</label>
-                        <input type="email" class="form-control" id="feedbackEmail" placeholder="foo@bar.com"/>
-                        <small id="feedbackEmailHelp" class="form-text text-muted">Fill this to allow us to contact you about your feedback.</small>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" id="feedbackEmailUse"/>
-                                <label for="feedbackEmailUse">I'm interested in hearing more about Incus</label>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="p-form__group">
-                        <label for="feedbackText">Feedback (optional)</label>
-                        <textarea class="form-control" id="feedbackText" rows="5"></textarea>
-                    </div>
-
-                    <button type="submit" class="p-button--positive">Send feedback</button>
-                </form>
+                <div class="panel-heading">Actions</div>
+                You can try to type the <pre>ls / </pre> command
             </div>
 
             <div class="panel panel-danger" id="tryit_error_panel" style="display:none">
