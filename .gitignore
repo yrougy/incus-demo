@@ -3,3 +3,8 @@
 /config.yaml
 *.swp
 .vscode
+debian
+gsh/config.yaml
+database.sqlite3
+gsh/database.sqlite3
+gsh/incus-gsh
