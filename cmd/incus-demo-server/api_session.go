@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/lxc/incus/v6/client"
+	incus "github.com/lxc/incus/v6/client"
 	"github.com/lxc/incus/v6/shared/api"
 )
 
@@ -128,7 +128,7 @@ func restStartHandler(w http.ResponseWriter, r *http.Request) {
 			info["ip"].(string),
 			info["username"].(string),
 			info["password"].(string),
-			instanceExpiry, requestDate, requestIP, requestTerms)
+			instanceExpiry, requestDate, requestIP, requestTerms, config.Instance.Source.Instance)
 		if err != nil {
 			incusForceDelete(incusDaemon, info["name"].(string))
 			restStartError(w, err, instanceUnknownError)

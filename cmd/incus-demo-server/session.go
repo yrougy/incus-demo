@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/lxc/incus/v6/client"
+	incus "github.com/lxc/incus/v6/client"
 	"github.com/lxc/incus/v6/shared/api"
 	"github.com/pborman/uuid"
 )
@@ -37,7 +37,7 @@ func instanceCreate(allocate bool, statusUpdate func(string)) (map[string]any, e
 	}
 
 	id := uuid.NewRandom().String()
-	instanceName := fmt.Sprintf("tryit-%s", id)
+	instanceName := fmt.Sprintf("ocf-%s", id)
 	instanceUsername := "admin"
 	instancePassword := uuid.NewRandom().String()
 
@@ -292,7 +292,7 @@ func instancePreAllocate() error {
 		info["username"].(string),
 		info["password"].(string),
 		instanceExpiry,
-		0, "", "")
+		0, "", "", config.Instance.Source.Instance)
 	if err != nil {
 		incusForceDelete(incusDaemon, info["name"].(string))
 		return err
@@ -323,7 +323,7 @@ func instanceResync() error {
 	// Check each instance.
 	for _, instanceName := range instanceNames {
 		// Skip anything we didn't create.
-		if !strings.HasPrefix(instanceName, "tryit-") {
+		if !strings.HasPrefix(instanceName, "ocf-") {
 			continue
 		}
 

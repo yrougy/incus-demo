@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS sessions (
     instance_expiry INT NOT NULL,
     request_date INT NOT NULL,
     request_ip VARCHAR(39) NOT NULL,
-    request_terms VARCHAR(64) NOT NULL
+    request_terms VARCHAR(64) NOT NULL,
+	instance_template VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS feedback (
@@ -216,7 +217,7 @@ func dbGetFeedback(id int64) (int64, int64, string, int64, string, error) {
 	return feedbackId, rating, email, emailUse, feedback, nil
 }
 
-func dbNew(status int, id string, instanceName string, instanceIP string, instanceUsername string, instancePassword string, instanceExpiry int64, requestDate int64, requestIP string, requestTerms string) (int64, error) {
+func dbNew(status int, id string, instanceName string, instanceIP string, instanceUsername string, instancePassword string, instanceExpiry int64, requestDate int64, requestIP string, requestTerms string, instanceTemplate string) (int64, error) {
 	res, err := db.Exec(`
 INSERT INTO sessions (
 	status,
@@ -228,8 +229,9 @@ INSERT INTO sessions (
 	instance_expiry,
 	request_date,
 	request_ip,
-	request_terms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-`, status, id, instanceName, instanceIP, instanceUsername, instancePassword, instanceExpiry, requestDate, requestIP, requestTerms)
+	request_terms,
+	instance_template) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`, status, id, instanceName, instanceIP, instanceUsername, instancePassword, instanceExpiry, requestDate, requestIP, requestTerms, instanceTemplate)
 	if err != nil {
 		return 0, err
 	}
