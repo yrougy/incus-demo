@@ -301,7 +301,7 @@ func dbIsAllocated(id int64) bool {
 	return count == 1
 }
 
-func dbGetAllocated(instanceExpiry int64, requestDate int64, requestIP string, requestTerms string) (int64, string, string, string, string, string, error) {
+func dbGetAllocated(instanceExpiry int64, requestDate int64, requestIP string, requestTerms string, instanceTemplate string) (int64, string, string, string, string, string, error) {
 	var id int64
 	var uuid string
 	var instanceName string
@@ -315,8 +315,8 @@ func dbGetAllocated(instanceExpiry int64, requestDate int64, requestIP string, r
 	}
 
 	// Find oldest pre-allocated instance.
-	statement := `SELECT id, uuid, instance_name, instance_ip, instance_username, instance_password FROM sessions WHERE status=2 ORDER BY instance_expiry ASC LIMIT 1;`
-	err := db.QueryRow(statement, id).Scan(&id, &uuid, &instanceName, &instanceIP, &instanceUsername, &instancePassword)
+	statement := `SELECT id, uuid, instance_name, instance_ip, instance_username, instance_password FROM sessions WHERE status=2 AND instance_template=? ORDER BY instance_expiry ASC LIMIT 1;`
+	err := db.QueryRow(statement, instanceTemplate, id).Scan(&id, &uuid, &instanceName, &instanceIP, &instanceUsername, &instancePassword)
 	if err != nil {
 		return 0, "", "", "", "", "", err
 	}

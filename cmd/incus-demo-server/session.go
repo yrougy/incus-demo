@@ -37,7 +37,7 @@ func instanceCreate(allocate bool, statusUpdate func(string)) (map[string]any, e
 	}
 
 	id := uuid.NewRandom().String()
-	instanceName := fmt.Sprintf("ocf-%s", id)
+	instanceName := fmt.Sprintf("%s-%s", config.Instance.Source.Instance, id)
 	instanceUsername := "admin"
 	instancePassword := uuid.NewRandom().String()
 
@@ -323,7 +323,7 @@ func instanceResync() error {
 	// Check each instance.
 	for _, instanceName := range instanceNames {
 		// Skip anything we didn't create.
-		if !strings.HasPrefix(instanceName, "ocf-") {
+		if !strings.HasPrefix(instanceName, config.Instance.Source.Instance+"-") {
 			continue
 		}
 

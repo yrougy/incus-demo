@@ -99,7 +99,7 @@ func restStartHandler(w http.ResponseWriter, r *http.Request) {
 	info := map[string]any{}
 	instanceExpiry := time.Now().Unix() + int64(config.Session.Expiry)
 
-	id, instanceUUID, instanceName, instanceIP, instanceUsername, instancePassword, err := dbGetAllocated(instanceExpiry, requestDate, requestIP, requestTerms)
+	id, instanceUUID, instanceName, instanceIP, instanceUsername, instancePassword, err := dbGetAllocated(instanceExpiry, requestDate, requestIP, requestTerms, config.Instance.Source.Instance)
 	if err == nil {
 		// Use a pre-created instance.
 		instanceID = id
