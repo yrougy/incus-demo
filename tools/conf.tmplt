@@ -1,0 +1,74 @@
+server:
+  api:
+    address: "[::]:8080"
+  blocklist:
+    - 1.2.3.4
+  feedback:
+    enabled: false
+    timeout: 20
+    email:
+      smtp: SERVER:PORT
+      from: ADDRESS
+      to: ADDRESS
+      subject: User feedback from try-it
+  limits: # 64 machines au total, chaque IP peut en demander 10
+    total: 64
+    ip: 10
+  maintenance:
+    enabled: false
+    message: Custom downtime message
+  proxy:
+    address: ""
+    certificate: |-
+    key: |-
+      PEM
+  statistics:
+    keys:
+      - 69280011-c8a5-4ef9-ae3d-e7caf4d06e06
+  terms: |-
+    ToS<br />
+    <ul>
+      <li>Access to this service may be revoked at any time for any reason</li>
+      <li>Access to this service is solely provided to test</li>
+      <li>Your IP address, access time and activity on the test server may be recorded</li>
+      <li>Any abuse of this service may lead to a ban or other applicable actions</li>
+    </ul>
+incus:
+  # certificate est la clé publique du certificat d'authentification
+  # key est la clé privée du certificat d'authentification 
+  # on peut la faire avec openssl pkcs12 -in incus-ui.pfx -out incus-ui.pem -nodes
+  # et ça sera dans le incus-ui.pem
+  client:
+    certificate: |- # incusPortal.crt
+%CRT%
+    key: |-         # incusPortal.key
+%KEY%
+  project: default
+  server:
+    url: "https://%SERVERIP%"
+    # Certificate est le certificat de l'interface web 
+    certificate: |-
+%WEBCERT%
+  target: %NOMCLUSTER%
+
+instance:
+ allocate:
+   count: 4
+   expiry: 21600
+ source:
+   #instance: "self1" #nom de l'image créée
+   image: "alpine/3.18"
+   type: "container" #ou "virtual-machine"
+ profiles:
+   - default #Profil Incus à utiliser
+ limits:
+   cpu: 1
+   disk: 10GiB
+   processes: 200
+   memory: 512MiB
+session:
+ command: ["sh"]
+ expiry: 900
+ console_only: false
+ network: ipv6
+
