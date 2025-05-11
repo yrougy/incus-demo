@@ -2,8 +2,8 @@ $(document).ready(function() {
     var tryit_terms_hash = "";
     var tryit_console = "";
     var tryit_server = location.host;
-    var tryit_server_rest = "http://" + tryit_server
-    var tryit_server_websocket = "ws://" + tryit_server
+    var tryit_server_rest = "https://" + tryit_server
+    var tryit_server_websocket = "wss://" + tryit_server
     var original_url = window.location.href.split("?")[0];
     var term = null
     var sock = null
@@ -69,7 +69,10 @@ $(document).ready(function() {
     }
 
     function setupConsole(id) {
+
         term = new Terminal({fontSize: 12});
+        const serializeAddon = new SerializeAddon.SerializeAddon();
+        term.loadAddon(serializeAddon);
         fitAddon = new FitAddon.FitAddon();
         term.loadAddon(fitAddon);
         term.open(document.getElementById("tryit_console"));
@@ -81,6 +84,7 @@ $(document).ready(function() {
         sock.onopen = function (e) {
             attachAddon = new AttachAddon.AttachAddon(sock);
             term.loadAddon(attachAddon);
+            term.loadAddon(serializeAddon);
             $('#tryit_console_reconnect').css("display", "none");
 
             sock.onclose = function(msg) {
@@ -88,6 +92,16 @@ $(document).ready(function() {
                 $('#tryit_console_reconnect').css("display", "inherit");
             };
         };
+        //sock.addEventListener("message", function (event) {
+        //    document.getElementById("tryit_content").innerHTML = event.data;
+//
+  //        });
+  sock.addEventListener("message", function(event) {
+    //serializeAddon.serialize()
+    // Met à jour le contenu de la div
+    document.getElementById("tryit_content").innerHTML = "<pre>" + serializeAddon.serialize() + "</pre>";
+});
+
     }
 
     function getSize(element, cell) {
@@ -149,6 +163,8 @@ $(document).ready(function() {
         data = $(this).text()
         sock.send(data);
         sock.send("\n");
+
+
     });
 
     tryit_console = getUrlParameter("id");
@@ -210,6 +226,12 @@ $(document).ready(function() {
                     return
                 }
 
+
+
+
+
+
+
                 $('#tryit_instance_id').text(data.id);
                 $('#tryit_instance_ip').text(data.ip);
                 $('#tryit_instance_fqdn').text(data.fqdn);
@@ -224,6 +246,8 @@ $(document).ready(function() {
                 $('#tryit_feedback_panel').css("display", "inherit");
                 $('#tryit_console_panel').css("display", "inherit");
                 $('#tryit_examples_panel').css("display", "inherit");
+                $('#tryit_history_panel').css("display", "inherit");
+
                 $('footer.p-footer').css("display", "none");
 
                 tryit_console = data.id;
