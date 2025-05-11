@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var tryit_terms_hash = "";
     var tryit_console = "";
-    //var tryit_server = location.host;
+    var tryit_server = "ocf-self.local:8081";
     var tryit_server_rest = "http://" + tryit_server
     var tryit_server_websocket = "ws://" + tryit_server
     var original_url = window.location.href.split("?")[0];
